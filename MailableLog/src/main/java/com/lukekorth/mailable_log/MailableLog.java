@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.net.Uri;
+import android.os.Looper;
 import android.support.v4.content.FileProvider;
 
 import org.slf4j.Logger;
@@ -105,9 +106,12 @@ public class MailableLog {
 
     /**
      * Called to build an Intent that can be used to send an email.
-     * Upon receiving the {@link android.content.Intent} from {@link #buildEmailIntent(android.content.Context, String, String, String, String)}
-     * you can call {@code context.startActivity(Intent.createChooser(intent, String))}
-     * to display a chooser to the user.
+     * Upon receiving the {@link android.content.Intent} from
+     * {@link #buildEmailIntent(android.content.Context, String, String, String, String)}
+     * you can call {@code context.startActivity(intent)} to display a chooser to the user.
+     *
+     * <b>Must be called on the background thread</b>, a {@link java.lang.IllegalThreadStateException}
+     * will be thrown if it is called on the main thread.
      *
      * @param context
      * @param emailAddress The email address the log should be sent to
@@ -115,12 +119,17 @@ public class MailableLog {
      * @param fileName The filename for the log to be attached to the email
      * @param metaData A {@code String} that will be prepended to the log. New lines should be
      *                 seperated with a "\n"
-     * @return An {@link android.content.Intent} to be passed to {@link android.content.Intent#createChooser(android.content.Intent, CharSequence)}
-     *         which in turn can be passed to {@link android.content.Context#startActivity(android.content.Intent)}
+     * @return A chooser {@link android.content.Intent} that can be used
+     *         to call {@link android.content.Context#startActivity(android.content.Intent)}
      * @throws IOException When MailableLog fails to read or write the log file
      */
     public static Intent buildEmailIntent(Context context, String emailAddress, String emailSubject,
                                         String fileName, String metaData) throws IOException {
+        if (Looper.myLooper() == Looper.getMainLooper()) {
+            throw new IllegalThreadStateException("MailableLog#buildEmailIntent cannot be called" +
+                    "from the main thread");
+        }
+
         File file = getFile(context, fileName);
         file.createNewFile();
         GZIPOutputStream gos = new GZIPOutputStream(new BufferedOutputStream(new PrintStream(file)));
@@ -148,7 +157,7 @@ public class MailableLog {
                     Intent.FLAG_GRANT_READ_URI_PERMISSION);
         }
 
-        return emailIntent;
+        return Intent.createChooser(emailIntent, context.getString(R.string.send_email_via));
     }
 
     private static File getFile(Context context, String fileName) {
