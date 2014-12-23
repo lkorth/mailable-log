@@ -105,6 +105,15 @@ public class MailableLog {
     }
 
     /**
+     * Clears the existing log
+     *
+     * @param context
+     */
+    public static void clearLog(Context context) {
+        new File(getFilePath(context)).delete();
+    }
+
+    /**
      * Called to build an Intent that can be used to send an email.
      * Upon receiving the {@link android.content.Intent} from
      * {@link #buildEmailIntent(android.content.Context, String, String, String, String)}
