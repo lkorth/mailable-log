@@ -7,7 +7,7 @@ Add mailable-log using Gradle:
 
 ```groovy
 dependencies {
-    compile 'com.lukekorth:mailable_log:0.1.1'
+    compile 'com.lukekorth:mailable_log:0.1.2'
 }
 ```
 
@@ -17,7 +17,7 @@ Maven:
 <dependency>
     <groupId>com.lukekorth</groupId>
     <artifactId>mailable_log</artifactId>
-    <version>0.1.1</version>
+    <version>0.1.2</version>
 </dependency>
 ```
 
