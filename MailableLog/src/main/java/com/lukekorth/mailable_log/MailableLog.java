@@ -150,7 +150,7 @@ public class MailableLog {
         gos.write(getLog(context).getBytes());
         gos.close();
 
-        Uri fileUri = FileProvider.getUriForFile(context, "com.lukekorth.mailable_log.fileprovider", file);
+        Uri fileUri = FileProvider.getUriForFile(context, context.getPackageName() + ".fileprovider", file);
 
         Intent emailIntent = new Intent(Intent.ACTION_SEND);
         emailIntent.setType("text/plain");

@@ -21,6 +21,23 @@ Maven:
 </dependency>
 ```
 
+Add the provider inside the application tag in your `AndroidManifest`:
+
+```xml
+<provider
+    android:name="android.support.v4.content.FileProvider"
+    android:authorities="${applicationId}.fileprovider"
+    android:exported="false"
+    android:grantUriPermissions="true">
+    <meta-data
+        android:name="android.support.FILE_PROVIDER_PATHS"
+        android:resource="@xml/file_paths" />
+</provider>
+```
+
+For those using Gradle `${applicationId}` can be left alone, however Maven users should replace
+`${applicationId}` with the app's package name.
+
 ## Usage
 
 ### Initializing
