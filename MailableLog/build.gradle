@@ -15,7 +15,7 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:support-v4:[25.0.0,26.0.0)'
+    compile 'com.android.support:support-v4:[25.0.0,25.99.0)'
     compile 'com.github.tony19:logback-android-core:1.1.1-6'
     compile 'com.github.tony19:logback-android-classic:1.1.1-6'
     compile 'org.slf4j:slf4j-api:1.7.21'
