@@ -3,22 +3,12 @@ mailable-log
 
 ## Getting Started
 
-Add mailable-log using Gradle:
+Add mailable-log as a dependency:
 
 ```groovy
 dependencies {
-    compile 'com.lukekorth:mailable_log:0.1.5'
+    compile 'com.lukekorth:mailable_log:0.1.6'
 }
-```
-
-Maven:
-
-```xml
-<dependency>
-    <groupId>com.lukekorth</groupId>
-    <artifactId>mailable_log</artifactId>
-    <version>0.1.5</version>
-</dependency>
 ```
 
 Add the provider inside the application tag in your `AndroidManifest`:
